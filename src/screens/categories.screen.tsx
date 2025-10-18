@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import type { TabScreenProps } from '../navigation/types';
 import { fontSize, height, width } from '../utils';
 
 const MOCK_CATEGORIES = [
@@ -18,11 +17,9 @@ const MOCK_CATEGORIES = [
   { id: '6', name: 'Toys', count: 12 },
 ];
 
-interface Props {
-  navigation: TabScreenProps<'Categories'>;
-}
+interface Props {}
 
-export const CategoriesScreen: React.FC<Props> = ({ navigation }) => {
+export const CategoriesScreen: React.FC<Props> = () => {
   const renderCategory = ({ item }: { item: (typeof MOCK_CATEGORIES)[0] }) => (
     <TouchableOpacity style={styles.categoryCard}>
       <View>

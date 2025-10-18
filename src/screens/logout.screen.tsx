@@ -1,10 +1,16 @@
 import React from 'react';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { CommonActions } from '@react-navigation/native';
+import { logOut } from '../store/slices/auth.slice';
+import { deleteToken } from '../utils/token.util';
 import type { TabScreenProps } from '../navigation/types';
 import { fontSize, height, width } from '../utils';
 
 export function LogoutScreen({ navigation }: TabScreenProps<'Logout'>) {
-  const handleLogout = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
     Alert.alert(
       'Logout',
       'Are you sure you want to logout?',
@@ -16,15 +22,24 @@ export function LogoutScreen({ navigation }: TabScreenProps<'Logout'>) {
         {
           text: 'Logout',
           style: 'destructive',
-          onPress: () => {
-            // TODO: Add your logout logic here
-            // For example: clear auth tokens, reset state, etc.
-            console.log('User logged out');
-            Alert.alert('Logged out', 'You have been logged out successfully');
+          onPress: async () => {
+            // Delete tokens from Keychain
+            await deleteToken();
+
+            // Dispatch logout action to clear auth state
+            dispatch(logOut());
+
+            // Navigate to Login screen and reset navigation stack
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+              }),
+            );
           },
         },
       ],
-      { cancelable: true }
+      { cancelable: true },
     );
   };
 
