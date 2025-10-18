@@ -6,7 +6,7 @@ import type { RootStackScreenProps } from '../../navigation/types';
 import { ILoginResponse } from '@src/models';
 import { USER_TYPES } from '@src/constants';
 import { loginApi } from '@src/api/auth';
-import { storeToken } from '../../utils/token.util';
+import { getToken, storeToken } from '@src/utils';
 
 /**
  * Custom hook for login functionality using React Query
@@ -34,7 +34,7 @@ export const useLogin = () => {
       if (data.refreshToken) {
         await storeToken('refresh', data.refreshToken);
       }
-
+      console.log('tok log', await getToken('access'));
       // Store user data in Redux (isAuthenticated is set to true in the reducer)
       const userData = {
         _id: data.id,

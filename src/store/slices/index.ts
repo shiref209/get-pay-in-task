@@ -2,8 +2,6 @@ export {
   default as AuthReducer,
   loginSuccess,
   logOut,
-  setToken,
-  resetToken,
   getAuth,
-  getToken,
+  hydrateAuth,
 } from './auth.slice';

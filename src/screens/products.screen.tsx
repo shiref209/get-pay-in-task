@@ -1,6 +1,11 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import type { TabScreenProps } from '../navigation/types';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { fontSize, height, width } from '../utils';
 
 const MOCK_PRODUCTS = [
@@ -11,8 +16,8 @@ const MOCK_PRODUCTS = [
   { id: '5', name: 'Product 5', price: '$59.99' },
 ];
 
-export function ProductsScreen({ navigation }: TabScreenProps<'Products'>) {
-  const renderProduct = ({ item }: { item: typeof MOCK_PRODUCTS[0] }) => (
+export function ProductsScreen() {
+  const renderProduct = ({ item }: { item: (typeof MOCK_PRODUCTS)[0] }) => (
     <TouchableOpacity style={styles.productCard}>
       <Text style={styles.productName}>{item.name}</Text>
       <Text style={styles.productPrice}>{item.price}</Text>

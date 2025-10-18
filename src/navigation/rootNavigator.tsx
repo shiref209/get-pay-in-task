@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { HomeScreen, LoginScreen } from '../screens';
+import { LoginScreen } from '../screens';
 import { getIsAuthenticated } from '../store/slices/auth.slice';
 import { BottomTabsNavigator } from './bottom-tabs-navigator';
 import type { RootStackParamList } from './types';
@@ -34,14 +34,6 @@ export function RootNavigator() {
         component={BottomTabsNavigator}
         options={{
           title: 'GetPayIn',
-        }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          title: 'Home',
-          headerShown: true,
         }}
       />
     </Stack.Navigator>

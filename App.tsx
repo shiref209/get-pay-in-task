@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
@@ -13,9 +6,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { queryClient } from './src/libs/react-query/react-query';
 import { RootNavigator } from './src/navigation';
-import { hydrateAuth } from './src/store/slices/auth.slice';
 import { store } from './src/store/store';
-import { getToken } from './src/utils/token.util';
+import { getToken } from '@src/utils';
+import { hydrateAuth } from '@src/store';
 
 if (__DEV__) {
   require('./src/libs/reactotron/ReactotronConfig');
