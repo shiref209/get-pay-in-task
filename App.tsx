@@ -5,12 +5,12 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
+import { NavigationContainer } from '@react-navigation/native';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { queryClient } from './src/libs/react-query/react-query';
+import { RootNavigator } from './src/navigation';
 
 if (__DEV__) {
   require('./src/libs/reactotron/ReactotronConfig');
@@ -28,15 +28,14 @@ function App() {
 }
 
 function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <View style={styles.container}>
+          <RootNavigator />
+        </View>
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
 
