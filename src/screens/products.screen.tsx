@@ -4,10 +4,17 @@ import { useGetProducts } from '@src/hooks';
 import { ActivityIndicator } from 'react-native';
 
 export function ProductsScreen() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useGetProducts({ category: '' });
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isRefetching,
+    refetch,
+  } = useGetProducts({ category: '' });
 
-  if (isLoading) {
+  if (isLoading || isRefetching) {
     return <ActivityIndicator />;
   }
   return (
@@ -16,6 +23,8 @@ export function ProductsScreen() {
       fetchNextPage={fetchNextPage}
       hasNextPage={hasNextPage}
       isFetchingNextPage={isFetchingNextPage}
+      onRefresh={refetch}
+      isRefreshing={isRefetching}
     />
   );
 }

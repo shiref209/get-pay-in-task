@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const useGetProducts = ({ category, limit = 10 }: Props = {}) => {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage,refetch,isRefetching } =
     useInfiniteQuery<IProductsResponse>({
       queryKey: [QUERY_KEYS.PRODUCTS, category],
       queryFn: ({ pageParam = 0 }) =>
@@ -38,6 +38,7 @@ export const useGetProducts = ({ category, limit = 10 }: Props = {}) => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    total: data?.pages?.[0]?.total ?? 0,
+    refetch,
+    isRefetching
   };
 };

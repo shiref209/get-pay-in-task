@@ -1,11 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Text } from 'react-native';
-import {
-  CategoriesScreen,
-  LogoutScreen,
-  ProductsScreen,
-} from '../screens';
+import { CategoriesScreen, LogoutScreen, ProductsScreen } from '../screens';
 import { fontSize, height } from '../utils';
 import type { BottomTabParamList } from './types';
 
@@ -27,7 +23,8 @@ export function BottomTabsNavigator() {
           fontSize: fontSize(12),
           fontWeight: '600',
         },
-      }}>
+      }}
+    >
       <Tab.Screen
         name="Products"
         component={ProductsScreen}
@@ -38,7 +35,7 @@ export function BottomTabsNavigator() {
         }}
       />
       <Tab.Screen
-        name="Categories"
+        name="Beauty"
         component={CategoriesScreen}
         options={{
           tabBarIcon: ({ color, size }) => (

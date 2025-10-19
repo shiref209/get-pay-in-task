@@ -2,6 +2,7 @@ import { fontSize, height, width } from '@src/utils';
 import {
   ActivityIndicator,
   FlatList,
+  RefreshControl,
   StyleSheet,
   Text,
   View,
@@ -14,6 +15,8 @@ interface Props {
   hasNextPage: boolean;
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
+  isRefreshing: boolean;
+  onRefresh: () => void;
 }
 
 export const ProductsContent: React.FC<Props> = ({
@@ -21,6 +24,8 @@ export const ProductsContent: React.FC<Props> = ({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
+  isRefreshing,
+  onRefresh,
 }) => {
   return (
     <View style={styles.container}>
@@ -35,11 +40,21 @@ export const ProductsContent: React.FC<Props> = ({
           }
         }}
         onEndReachedThreshold={0.5}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+            tintColor="#2196F3"
+            colors={['#2196F3']}
+          />
+        }
         ListFooterComponent={
-          isFetchingNextPage ? <ActivityIndicator size={'small'} /> : null
+          isFetchingNextPage ? (
+            <ActivityIndicator size="small" color="#2196F3" style={styles.loader} />
+          ) : null
         }
         ListEmptyComponent={
-          <View>
+          <View style={styles.emptyContainer}>
             <Text style={styles.noProductsText}>No Products Found</Text>
           </View>
         }
@@ -81,9 +96,19 @@ const styles = StyleSheet.create({
     color: '#2196F3',
     fontWeight: 'bold',
   },
+  loader: {
+    marginVertical: height(20),
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: height(40),
+  },
   noProductsText: {
     fontSize: fontSize(24),
     textAlign: 'center',
     fontWeight: 'bold',
+    color: '#666',
   },
 });
