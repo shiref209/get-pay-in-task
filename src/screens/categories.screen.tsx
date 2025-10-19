@@ -1,7 +1,7 @@
 import React from 'react';
-import { ProductsContent } from '@src/components';
+import { ProductsContent, AppHeader } from '@src/components';
 import { useGetProducts } from '@src/hooks';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View, StyleSheet } from 'react-native';
 
 interface Props {}
 
@@ -17,16 +17,33 @@ export const CategoriesScreen: React.FC<Props> = () => {
   } = useGetProducts({ category: 'beauty' });
 
   if (isLoading || isRefetching) {
-    return <ActivityIndicator />;
+    return (
+      <>
+        <AppHeader title="Beauty" />
+        <ActivityIndicator style={styles.loader} />
+      </>
+    );
   }
   return (
-    <ProductsContent
-      products={data}
-      fetchNextPage={fetchNextPage}
-      hasNextPage={hasNextPage}
-      isFetchingNextPage={isFetchingNextPage}
-      onRefresh={refetch}
-      isRefreshing={isRefetching}
-    />
+    <View style={styles.container}>
+      <AppHeader title="Beauty" />
+      <ProductsContent
+        products={data}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        onRefresh={refetch}
+        isRefreshing={isRefetching}
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  loader: {
+    flex: 1,
+  },
+});

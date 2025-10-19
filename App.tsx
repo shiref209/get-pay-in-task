@@ -3,12 +3,11 @@ import {
   NavigationContainer,
   useNavigation,
 } from '@react-navigation/native';
-import { QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
-import { queryClient } from './src/libs/react-query/react-query';
+import { queryClient, persister, PersistQueryClientProvider } from './src/libs/react-query/react-query';
 import { RootNavigator } from './src/navigation';
 import { store } from './src/store/store';
 import { deleteToken, getToken } from '@src/utils';
@@ -53,7 +52,9 @@ function App() {
 
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister }}>
         <BiometricLockProvider>
           <SafeAreaProvider>
             <StatusBar
@@ -67,7 +68,7 @@ function App() {
             </NavigationContainer>
           </SafeAreaProvider>
         </BiometricLockProvider>
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </Provider>
   );
 }
