@@ -11,8 +11,8 @@ import {
   authenticateWithBiometrics,
   checkBiometricAvailability,
   getBiometryTypeName,
-} from '../utils/biometric.util';
-import { getToken } from '../utils/token.util';
+} from '../../utils/biometric.util';
+import { getToken } from '../../utils/token.util';
 import { fontSize, height, width } from '@src/utils';
 
 interface LockScreenProps {
@@ -123,13 +123,18 @@ export const LockScreen: React.FC<LockScreenProps> = ({
         </Text>
 
         {isAuthenticating ? (
-          <ActivityIndicator size="large" color="#007AFF" style={styles.loader} />
+          <ActivityIndicator
+            size="large"
+            color="#007AFF"
+            style={styles.loader}
+          />
         ) : (
           <View style={styles.buttonContainer}>
             {biometricAvailable && (
               <TouchableOpacity
                 style={styles.biometricButton}
-                onPress={handleBiometricAuth}>
+                onPress={handleBiometricAuth}
+              >
                 <Text style={styles.biometricButtonText}>
                   Unlock with {biometryType}
                 </Text>
@@ -138,7 +143,8 @@ export const LockScreen: React.FC<LockScreenProps> = ({
 
             <TouchableOpacity
               style={styles.passwordButton}
-              onPress={handlePasswordFallback}>
+              onPress={handlePasswordFallback}
+            >
               <Text style={styles.passwordButtonText}>Use Password</Text>
             </TouchableOpacity>
 

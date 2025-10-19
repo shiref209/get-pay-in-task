@@ -1,1 +1,2 @@
-export * from './lock-screen.component';
+export * from './lock-screen';
+export * from './products'

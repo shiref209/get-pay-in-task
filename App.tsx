@@ -14,7 +14,7 @@ import { store } from './src/store/store';
 import { deleteToken, getToken } from '@src/utils';
 import { hydrateAuth, logOut } from '@src/store';
 import { BiometricLockProvider, useBiometricLock } from './src/context';
-import { LockScreen } from './src/components';
+import { LockScreen } from '@src/components';
 
 if (__DEV__) {
   require('./src/libs/reactotron/ReactotronConfig');
