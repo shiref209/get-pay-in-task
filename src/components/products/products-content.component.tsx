@@ -28,55 +28,42 @@ export const ProductsContent: React.FC<Props> = ({
   onRefresh,
 }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Products</Text>
-      <FlatList
-        data={products}
-        renderItem={({ item }) => <ProductCard product={item} />}
-        contentContainerStyle={styles.listContainer}
-        onEndReached={() => {
-          if (hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-          }
-        }}
-        onEndReachedThreshold={0.5}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={onRefresh}
-            tintColor="#2196F3"
-            colors={['#2196F3']}
-          />
+    <FlatList
+      data={products}
+      renderItem={({ item }) => <ProductCard product={item} />}
+      contentContainerStyle={styles.listContainer}
+      onEndReached={() => {
+        if (hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
         }
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <ActivityIndicator size="small" color="#2196F3" style={styles.loader} />
-          ) : null
-        }
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Text style={styles.noProductsText}>No Products Found</Text>
-          </View>
-        }
-      />
-    </View>
+      }}
+      onEndReachedThreshold={0.5}
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={onRefresh}
+          tintColor="#2196F3"
+          colors={['#2196F3']}
+        />
+      }
+      ListFooterComponent={
+        isFetchingNextPage ? (
+          <ActivityIndicator size="small" color="#2196F3" style={styles.loader} />
+        ) : null
+      }
+      ListEmptyComponent={
+        <View style={styles.emptyContainer}>
+          <Text style={styles.noProductsText}>No Products Found</Text>
+        </View>
+      }
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: fontSize(24),
-    fontWeight: 'bold',
-    padding: width(16),
-    borderBottomWidth: height(1),
-    borderBottomColor: '#e0e0e0',
-  },
   listContainer: {
     padding: width(16),
+    backgroundColor: '#f5f5f5',
   },
   productCard: {
     backgroundColor: '#f5f5f5',

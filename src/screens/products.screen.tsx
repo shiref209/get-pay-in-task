@@ -1,7 +1,7 @@
 import React from 'react';
-import { ProductsContent } from '@src/components';
+import { AppHeader, ProductsContent } from '@src/components';
 import { useGetProducts } from '@src/hooks';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 export function ProductsScreen() {
   const {
@@ -12,19 +12,40 @@ export function ProductsScreen() {
     isLoading,
     isRefetching,
     refetch,
-  } = useGetProducts({ category: '' });
+  } = useGetProducts();
 
-  if (isLoading || isRefetching) {
-    return <ActivityIndicator />;
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#2196F3" />
+      </View>
+    );
   }
+
   return (
-    <ProductsContent
-      products={data}
-      fetchNextPage={fetchNextPage}
-      hasNextPage={hasNextPage}
-      isFetchingNextPage={isFetchingNextPage}
-      onRefresh={refetch}
-      isRefreshing={isRefetching}
-    />
+    <View style={styles.container}>
+      <AppHeader title="Products" />
+      <ProductsContent
+        products={data}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        onRefresh={refetch}
+        isRefreshing={isRefetching}
+      />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+});
