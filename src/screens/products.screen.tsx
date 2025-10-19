@@ -1,7 +1,8 @@
 import React from 'react';
-import { AppHeader, ProductsContent } from '@src/components';
+import { ProductsContent } from '@src/components';
 import { useGetProducts, useDeleteProduct } from '@src/hooks';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { AppHeader } from '@src/common';
 
 export function ProductsScreen() {
   const {

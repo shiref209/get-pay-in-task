@@ -6,7 +6,7 @@ import { logOut } from '../store/slices/auth.slice';
 import { deleteToken } from '../utils/token.util';
 import type { TabScreenProps } from '../navigation/types';
 import { fontSize, height, width } from '../utils';
-import { AppHeader } from '@src/components';
+import { AppHeader } from '@src/common';
 
 export function LogoutScreen({ navigation }: TabScreenProps<'Logout'>) {
   const dispatch = useDispatch();

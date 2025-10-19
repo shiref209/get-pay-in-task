@@ -1,7 +1,8 @@
 import React from 'react';
-import { ProductsContent, AppHeader } from '@src/components';
+import { ProductsContent } from '@src/components';
 import { useGetProducts, useDeleteProduct } from '@src/hooks';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { AppHeader } from '@src/common';
 
 interface Props {}
 
