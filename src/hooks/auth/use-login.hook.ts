@@ -45,7 +45,8 @@ export const useLogin = () => {
         _id: data.id,
         name: `${data.firstName} ${data.lastName}`,
         phoneNumber: data.phone || '',
-        type: USER_TYPES.USER,
+        // User specified as admin has id 1
+        type: data.id === 1 ? USER_TYPES.ADMIN : USER_TYPES.USER,
         email: data.email,
         image: data.image,
       };

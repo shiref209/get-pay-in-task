@@ -101,7 +101,7 @@ export function LoginScreen(_props: RootStackScreenProps<'Login'>) {
                 Hint: Use any user from dummyjson.com/users
               </Text>
               <Text style={styles.hintText}>
-                Example: username: "emilys", password: "emilyspass"
+                Admin: username: "emilys", password: "emilyspass"
               </Text>
             </View>
           </View>

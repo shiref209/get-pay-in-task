@@ -17,6 +17,8 @@ interface Props {
   isFetchingNextPage: boolean;
   isRefreshing: boolean;
   onRefresh: () => void;
+  onDelete?: (productId: number) => void;
+  deletingProductId?: number;
 }
 
 export const ProductsContent: React.FC<Props> = ({
@@ -26,11 +28,19 @@ export const ProductsContent: React.FC<Props> = ({
   isFetchingNextPage,
   isRefreshing,
   onRefresh,
+  onDelete,
+  deletingProductId,
 }) => {
   return (
     <FlatList
       data={products}
-      renderItem={({ item }) => <ProductCard product={item} />}
+      renderItem={({ item }) => (
+        <ProductCard
+          product={item}
+          onDelete={onDelete}
+          isDeleting={deletingProductId === item.id}
+        />
+      )}
       contentContainerStyle={styles.listContainer}
       onEndReached={() => {
         if (hasNextPage && !isFetchingNextPage) {
@@ -48,7 +58,11 @@ export const ProductsContent: React.FC<Props> = ({
       }
       ListFooterComponent={
         isFetchingNextPage ? (
-          <ActivityIndicator size="small" color="#2196F3" style={styles.loader} />
+          <ActivityIndicator
+            size="small"
+            color="#2196F3"
+            style={styles.loader}
+          />
         ) : null
       }
       ListEmptyComponent={

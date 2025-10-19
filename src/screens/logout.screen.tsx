@@ -6,6 +6,7 @@ import { logOut } from '../store/slices/auth.slice';
 import { deleteToken } from '../utils/token.util';
 import type { TabScreenProps } from '../navigation/types';
 import { fontSize, height, width } from '../utils';
+import { AppHeader } from '@src/components';
 
 export function LogoutScreen({ navigation }: TabScreenProps<'Logout'>) {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ export function LogoutScreen({ navigation }: TabScreenProps<'Logout'>) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Account Settings</Text>
+      <AppHeader title="Logout" />
       <View style={styles.content}>
         <Text style={styles.description}>
           Click the button below to logout from your account.

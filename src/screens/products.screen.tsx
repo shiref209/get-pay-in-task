@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppHeader, ProductsContent } from '@src/components';
-import { useGetProducts } from '@src/hooks';
+import { useGetProducts, useDeleteProduct } from '@src/hooks';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 export function ProductsScreen() {
@@ -13,6 +13,8 @@ export function ProductsScreen() {
     isRefetching,
     refetch,
   } = useGetProducts();
+
+  const { deleteProduct, deletingProductId } = useDeleteProduct();
 
   if (isLoading) {
     return (
@@ -32,6 +34,8 @@ export function ProductsScreen() {
         isFetchingNextPage={isFetchingNextPage}
         onRefresh={refetch}
         isRefreshing={isRefetching}
+        onDelete={deleteProduct}
+        deletingProductId={deletingProductId}
       />
     </View>
   );

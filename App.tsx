@@ -14,6 +14,7 @@ import { deleteToken, getToken } from '@src/utils';
 import { hydrateAuth, logOut } from '@src/store';
 import { BiometricLockProvider, useBiometricLock } from './src/context';
 import { LockScreen } from '@src/components';
+import Toast from 'react-native-toast-message';
 
 if (__DEV__) {
   require('./src/libs/reactotron/ReactotronConfig');
@@ -66,6 +67,7 @@ function App() {
                 <AppLockOverlay />
               </View>
             </NavigationContainer>
+            <Toast />
           </SafeAreaProvider>
         </BiometricLockProvider>
       </PersistQueryClientProvider>

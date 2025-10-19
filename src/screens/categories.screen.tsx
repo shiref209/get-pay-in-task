@@ -1,6 +1,6 @@
 import React from 'react';
 import { ProductsContent, AppHeader } from '@src/components';
-import { useGetProducts } from '@src/hooks';
+import { useGetProducts, useDeleteProduct } from '@src/hooks';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 
 interface Props {}
@@ -15,6 +15,8 @@ export const CategoriesScreen: React.FC<Props> = () => {
     isRefetching,
     refetch,
   } = useGetProducts({ category: 'beauty' });
+
+  const { deleteProduct, deletingProductId } = useDeleteProduct();
 
   if (isLoading || isRefetching) {
     return (
@@ -34,6 +36,8 @@ export const CategoriesScreen: React.FC<Props> = () => {
         isFetchingNextPage={isFetchingNextPage}
         onRefresh={refetch}
         isRefreshing={isRefetching}
+        onDelete={deleteProduct}
+        deletingProductId={deletingProductId}
       />
     </View>
   );

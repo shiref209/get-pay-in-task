@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Image,
   StyleSheet,
@@ -15,15 +16,16 @@ import { IProduct } from '@src/models';
 interface ProductCardProps {
   product: IProduct;
   onDelete?: (productId: number) => void;
+  isDeleting?: boolean;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onDelete,
+  isDeleting,
 }) => {
   const user = useAppSelector(state => state.auth.user);
   const isSuperAdmin = user?.type === USER_TYPES.ADMIN;
-
   const handleDelete = () => {
     Alert.alert(
       'Delete Product',
@@ -65,8 +67,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           style={styles.deleteButton}
           onPress={handleDelete}
           activeOpacity={0.7}
+          disabled={isDeleting}
         >
-          <Text style={styles.deleteButtonText}>Delete</Text>
+          {isDeleting ? (
+            <ActivityIndicator color={'#fff'} />
+          ) : (
+            <Text style={styles.deleteButtonText}>Delete</Text>
+          )}
         </TouchableOpacity>
       )}
     </View>
