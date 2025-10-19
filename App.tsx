@@ -1,4 +1,8 @@
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  CommonActions,
+  NavigationContainer,
+  useNavigation,
+} from '@react-navigation/native';
 import { QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
@@ -7,8 +11,10 @@ import { Provider } from 'react-redux';
 import { queryClient } from './src/libs/react-query/react-query';
 import { RootNavigator } from './src/navigation';
 import { store } from './src/store/store';
-import { getToken } from '@src/utils';
-import { hydrateAuth } from '@src/store';
+import { deleteToken, getToken } from '@src/utils';
+import { hydrateAuth, logOut } from '@src/store';
+import { BiometricLockProvider, useBiometricLock } from './src/context';
+import { LockScreen } from './src/components';
 
 if (__DEV__) {
   require('./src/libs/reactotron/ReactotronConfig');
@@ -48,17 +54,47 @@ function App() {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <SafeAreaProvider>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <NavigationContainer>
-            <View style={styles.container}>
-              <RootNavigator />
-            </View>
-          </NavigationContainer>
-        </SafeAreaProvider>
+        <BiometricLockProvider>
+          <SafeAreaProvider>
+            <StatusBar
+              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            />
+            <NavigationContainer>
+              <View style={styles.container}>
+                <RootNavigator />
+                <AppLockOverlay />
+              </View>
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </BiometricLockProvider>
       </QueryClientProvider>
     </Provider>
   );
+}
+
+function AppLockOverlay() {
+  const { isLocked, unlockApp } = useBiometricLock();
+  const navigation = useNavigation();
+
+  const handleLogout = async () => {
+    await deleteToken();
+    store.dispatch(logOut());
+    unlockApp();
+    await deleteToken();
+    // Navigate to Login screen and reset navigation stack
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      }),
+    );
+  };
+
+  if (!isLocked) {
+    return null;
+  }
+
+  return <LockScreen onUnlock={unlockApp} onLogout={handleLogout} />;
 }
 
 const styles = StyleSheet.create({
